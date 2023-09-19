@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -12,7 +12,6 @@ const tab = createBottomTabNavigator();
 
 export default function App() {
     return (
-
         <NavigationContainer>
             <tab.Navigator
                 screenOptions={({ route }) => ({
@@ -39,5 +38,4 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#383E42',
     },
- 
 });

@@ -4,7 +4,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ButtonImage from './ButtonImage';
-import emailjs from 'emailjs-com';
+import emailjs from '@emailjs/browser';
+import MapViewer from './MapViewer';
 
 export default function AlertForm() {
 
@@ -43,12 +44,15 @@ export default function AlertForm() {
     };
 
     const handleSubmit = () => {
-        // Envoyer les données au serveur ou effectuer d'autres actions ici
+        const name = useState('').value;
+        const email = useState('').value;
+        const alertType = useState('').value;
         if (!alert) {
             return;
         }
-
         const templateParams = {
+            name,
+            email,
             alertType,
         };
 
@@ -82,129 +86,140 @@ export default function AlertForm() {
     };
 
     return (
+        <ScrollView>
+            <MapViewer />
 
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text>Type d'alerte :</Text>
-            <TextInput
-                style={styles.input}
-                required
-                placeholder="Entrez le type d'alerte"
-                value={alertType}
-                onChangeText={(text) => setAlertType(text)}
-            />
+            <View style={styles.container}>
 
-            <Text style={styles.label}>Description :</Text>
-            <TextInput
-                style={[styles.input, styles.multilineInput]}
-                placeholder="Entrez la description"
-                value={description}
-                onChangeText={(text) => setDescription(text)}
-                multiline
-            />
+                {/*<Text style={styles.label}>Type d'alerte :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Entrez le type d'alerte"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={alertType}
+                    onChangeText={(text) => setAlertType(text)}
+                />
 
-            <Text style={styles.label}>Nom :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Nom"
-                value={name}
-                onChangeText={(text) => setName(text)}
+                {/*<Text style={styles.label}>Description :</Text>*/}
+                <TextInput
+                    style={[styles.input, styles.multilineInput]}
+                    placeholder="Entrez la description"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={description}
+                    onChangeText={(text) => setDescription(text)}
+                    multiline
+                />
 
-            />
-            <Text style={styles.label}>Prenom :</Text>
-            <TextInput
+                {/*<Text style={styles.label}>Nom :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Nom"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={name}
+                    onChangeText={(text) => setName(text)}
 
-                style={styles.input}
-                placeholder="Prenom"
-                value={firstname}
-                onChangeText={(text) => setFirstname(text)}
+                />
+                {/*<Text style={styles.label}>Prenom :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Prenom"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={firstname}
+                    onChangeText={(text) => setFirstname(text)}
 
-            />
-            <Text style={styles.label}>Adresse :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Adresse"
-                value={address}
-                onChangeText={(text) => setAddress(text)}
+                />
+                {/*<Text style={styles.label}>Adresse :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Adresse"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={address}
+                    onChangeText={(text) => setAddress(text)}
 
-            />
-            <Text style={styles.label}>Code postal :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Code postal"
-                value={postcode}
-                onChangeText={(text) => setPostcode(text)}
+                />
+                {/*<Text style={styles.label}>Code postal :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Code postal"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={postcode}
+                    onChangeText={(text) => setPostcode(text)}
 
-            />
-            <Text style={styles.label}>Ville :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Ville"
-                value={city}
-                onChangeText={(text) => setCity(text)}
+                />
+                {/*<Text style={styles.label}>Ville :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Ville"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={city}
+                    onChangeText={(text) => setCity(text)}
 
-            />
-            <Text style={styles.label}>Email :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="Email"
-                value={email}
-                onChangeText={(text) => setEmail(text)}
+                />
+                {/*<Text style={styles.label}>Email :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="Email"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={email}
+                    onChangeText={(text) => setEmail(text)}
 
-            />
-            <Text style={styles.label}>T&eacute;l&eacute;phone :</Text>
-            <TextInput
-                style={styles.input}
-                placeholder="T&eacute;l&eacute;phone"
-                value={phoneNumber}
-                onChangeText={(text) => setPhoneNumber(text)}
+                />
+                {/*<Text style={styles.label}>T&eacute;l&eacute;phone :</Text>*/}
+                <TextInput
+                    style={styles.input}
+                    placeholder="T&eacute;l&eacute;phone"
+                    placeholderTextColor={styles.placeholder.color}
+                    value={phoneNumber}
+                    onChangeText={(text) => setPhoneNumber(text)}
 
-            />
-            <View>
-                <Text style={styles.label}>Date :</Text>
-                <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
-                    <Ionicons name="calendar" size={24} color='#25292e' />
+                />
+                <View>
+                    <Text style={styles.label}>Date :</Text>
+                    <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
+                        <Ionicons name="calendar" size={24} color='#25292e' />
+                    </Pressable>
+                    {showDatePicker && (
+                        <DateTimePicker
+                            testID="datePicker"
+                            value={date}
+                            mode="date"
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChangeDate}
+                        />
+                    )}
+                </View>
+
+
+                <Text style={styles.label}>Heure :</Text>
+                <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
+                    <Ionicons name="time" size={24} color="black" />
                 </Pressable>
-                {showDatePicker && (
+                {showTimePicker && (
                     <DateTimePicker
-                        testID="datePicker"
-                        value={date}
-                        mode="date"
+                        testID="timePicker"
+                        value={time}
+                        mode="time"
                         is24Hour={true}
                         display="default"
-                        onChange={onChangeDate}
+                        onChange={onChangeTime}
                     />
                 )}
-            </View>
-
-
-            <Text style={styles.label}>Heure :</Text>
-            <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
-                <Ionicons name="time" size={24} color="black" />
-            </Pressable>
-            {showTimePicker && (
-                <DateTimePicker
-                    testID="timePicker"
-                    value={time}
-                    mode="time"
-                    is24Hour={true}
-                    display="default"
-                    onChange={onChangeTime}
-                />
-            )}
 
                 <Button title="Choisir une photo" onPress={handleChoosePhoto} />
-           
 
-            {photo && (
-                <View>
-                    <Text>Photo sélectionnée :</Text>
-                    <Image source={{ uri: photo.uri }} style={{ width: 200, height: 200 }} />
-                </View>
-            )}
 
-            <Pressable style={styles.footerContainer} onPress={handleSubmit}>
-                <ButtonImage label="Envoyer l'alerte" />
-            </Pressable>
+                {photo && (
+                    <View>
+                        <Text>Photo sélectionnée :</Text>
+                        <Image source={{ uri: photo.uri }} style={{ width: 200, height: 200 }} />
+                    </View>
+                )}
+
+                <Pressable style={styles.footerContainer} onPress={handleSubmit}>
+                    <ButtonImage label="Envoyer l'alerte" />
+                </Pressable>
+            </View>
         </ScrollView>
     )
 
@@ -214,19 +229,26 @@ export default function AlertForm() {
 const styles = StyleSheet.create({
     container: {
         padding: 16,
-        backgroundColor: '#fff',
-        color: '#383E42',
+        backgroundColor: '#383E42',
     },
     label: {
         fontSize: 12,
         fontWeight: 'bold',
+        color: '#fff',
+        paddingBottom: 2,
     },
     input: {
         height: 40,
         borderColor: 'gray',
-        borderWidth: 1,
+        borderWidth: 2,
+        borderRadius: 4,
         marginBottom: 16,
         paddingHorizontal: 8,
+    },
+    placeholder: {
+        color: '#F5F5F5',
+        opacity: 0.5,
+        fontSize: 8,
     },
     multilineInput: {
         height: 100,
@@ -241,24 +263,24 @@ const styles = StyleSheet.create({
     },
     footerContainer: {
         alignItems: 'center',
-        backgroundColor: '#383E42',
+        backgroundColor: 'gray',
         borderRadius: 8,
-        marginTop:4,
-        marginBottom:4,
-        marginLeft:24,
-        marginRight:24,
+        marginTop: 4,
+        marginBottom: 4,
+        marginLeft: 24,
+        marginRight: 24,
     },
     datePickerButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#fff',
         padding: 10,
         borderRadius: 5,
     },
     timePickerButton: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#f0f0f0',
+        backgroundColor: '#fff',
         padding: 10,
         borderRadius: 5,
     },

@@ -3,6 +3,7 @@ import { StyleSheet, View, Text, Image } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import ImageViewer from './ImageViewer';
 
+
 const PlaceholderImage = require('../assets/images/accueil-image.jpeg');
 
 export default function HomeScreen() {
@@ -11,9 +12,10 @@ export default function HomeScreen() {
         <View style={styles.container}>
             <View style={styles.banner}>
                 <Text style={styles.bannerText}>Bienvenue &agrave; Simplonville</Text>
-                <Text style={styles.title}>Alertez-nous ! Accident, travaux, probl&egrave;me de voirie (propret&eacute;, &eacute;clairage,...) !  Priorit&eacute; num&eacute;ro 1, la s&eacute;curit&eacute; de tous.  </Text>
+                <Text style={styles.title}>Alertez-nous ! Accident, travaux, probl&egrave;me de voirie (propret&eacute;, &eacute;clairage,...) !  </Text>
+                <Text style={styles.title}>Priorit&eacute; num&eacute;ro 1, la s&eacute;curit&eacute; de tous.  </Text>
             </View>
-            <View style={styles.imageContainer}>
+            <View >
                 <ImageViewer placeholderImageSource={PlaceholderImage} />
             </View>
             <StatusBar style="auto" />
@@ -34,15 +36,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    imageContainer: {
-
-    },
     bannerText: {
         color: 'white',
         fontSize: 18,
         fontWeight: 'bold',
-        marginBottom: 8,
-        marginTop: 8,
+        marginBottom: 4,
+        marginTop: 4,
     },
 
     title: {
