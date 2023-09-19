@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.1.7",
     "@react-navigation/native-stack": "^6.9.13",
     "@react-navigation/stack": "^6.3.17",
+    "emailjs-com": "^3.2.0",
     "expo": "~49.0.11",
     "expo-image-picker": "~14.3.2",
     "expo-media-library": "~15.4.1",
@@ -35,7 +36,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
-    "@babel/plugin-proposal-export-namespace-from": "^7.18.9"
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "react-native-dotenv": "^3.4.9"
   },
   "private": true
 }

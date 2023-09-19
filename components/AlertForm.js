@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, Button, Image, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, View, Text, TextInput, Button, Image, Pressable, ScrollView } from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
+import ButtonImage from './ButtonImage';
+import emailjs from 'emailjs-com';
 
 export default function AlertForm() {
 
     const [alertType, setAlertType] = useState('');
     const [description, setDescription] = useState('');
-    const [nom, setNom] = useState('');
-    const [Prenom, setPrenom] = useState('');
+    const [name, setName] = useState('');
+    const [firstname, setFirstname] = useState('');
+    const [address, setAddress] = useState('');
+    const [postcode, setPostcode] = useState('');
+    const [city, setCity] = useState('');
+    const [email, setEmail] = useState('');
+    const [phoneNumber, setPhoneNumber] = useState('');
     const [date, setDate] = useState(new Date());
     const [showDatePicker, setShowDatePicker] = useState(false);
     const [time, setTime] = useState(new Date());
@@ -31,20 +37,35 @@ export default function AlertForm() {
             quality: 1,
         });
 
-        if (!result.cancelled) {
+        if (!result.canceled) {
             setPhoto(result);
         }
     };
 
     const handleSubmit = () => {
         // Envoyer les données au serveur ou effectuer d'autres actions ici
-        console.log('Type d\'alerte :', alertType);
-        console.log('Description :', description);
-        console.log('Nom :', description);
-        console.log('Prénom :', description);
-        console.log('Date :', date);
-        console.log('Heure :', time);
-        console.log('Photo :', photo);
+        if (!alert) {
+            return;
+        }
+
+        const templateParams = {
+            alertType,
+        };
+
+        emailjs
+            .send(
+                'EMAILJS_SERVICE_ID',
+                'EMAILJS_TEMPLATE_ID',
+                templateParams,
+                'YOUR_USER_ID'
+            )
+            .then((response) => {
+                console.log('E-mail envoyé avec succès', response);
+            })
+            .catch((error) => {
+                console.error('Erreur lors de l\'envoi de l\'e-mail', error);
+            });
+
     };
 
     const onChangeDate = (event, selectedDate) => {
@@ -66,6 +87,7 @@ export default function AlertForm() {
             <Text>Type d'alerte :</Text>
             <TextInput
                 style={styles.input}
+                required
                 placeholder="Entrez le type d'alerte"
                 value={alertType}
                 onChangeText={(text) => setAlertType(text)}
@@ -84,23 +106,64 @@ export default function AlertForm() {
             <TextInput
                 style={styles.input}
                 placeholder="Nom"
-                value={description}
-                onChangeText={(text) => setNom(text)}
+                value={name}
+                onChangeText={(text) => setName(text)}
 
             />
             <Text style={styles.label}>Prenom :</Text>
             <TextInput
+
                 style={styles.input}
                 placeholder="Prenom"
-                value={description}
-                onChangeText={(text) => setPrenom(text)}
+                value={firstname}
+                onChangeText={(text) => setFirstname(text)}
+
+            />
+            <Text style={styles.label}>Adresse :</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Adresse"
+                value={address}
+                onChangeText={(text) => setAddress(text)}
+
+            />
+            <Text style={styles.label}>Code postal :</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Code postal"
+                value={postcode}
+                onChangeText={(text) => setPostcode(text)}
+
+            />
+            <Text style={styles.label}>Ville :</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Ville"
+                value={city}
+                onChangeText={(text) => setCity(text)}
+
+            />
+            <Text style={styles.label}>Email :</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+
+            />
+            <Text style={styles.label}>T&eacute;l&eacute;phone :</Text>
+            <TextInput
+                style={styles.input}
+                placeholder="T&eacute;l&eacute;phone"
+                value={phoneNumber}
+                onChangeText={(text) => setPhoneNumber(text)}
 
             />
             <View>
                 <Text style={styles.label}>Date :</Text>
-                <TouchableOpacity onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
+                <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
                     <Ionicons name="calendar" size={24} color='#25292e' />
-                </TouchableOpacity>
+                </Pressable>
                 {showDatePicker && (
                     <DateTimePicker
                         testID="datePicker"
@@ -112,12 +175,12 @@ export default function AlertForm() {
                     />
                 )}
             </View>
-    
+
 
             <Text style={styles.label}>Heure :</Text>
-            <TouchableOpacity onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
-                <Ionicons name="time" size={24} color="black" /> 
-            </TouchableOpacity>
+            <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
+                <Ionicons name="time" size={24} color="black" />
+            </Pressable>
             {showTimePicker && (
                 <DateTimePicker
                     testID="timePicker"
@@ -129,7 +192,8 @@ export default function AlertForm() {
                 />
             )}
 
-            <Button title="Choisir une photo" onPress={handleChoosePhoto} />
+                <Button title="Choisir une photo" onPress={handleChoosePhoto} />
+           
 
             {photo && (
                 <View>
@@ -138,9 +202,9 @@ export default function AlertForm() {
                 </View>
             )}
 
-            <TouchableOpacity onPress={handleSubmit}>
-                <Text style={styles.text}>Envoyer l'alerte</Text>
-            </TouchableOpacity>
+            <Pressable style={styles.footerContainer} onPress={handleSubmit}>
+                <ButtonImage label="Envoyer l'alerte" />
+            </Pressable>
         </ScrollView>
     )
 
@@ -149,10 +213,9 @@ export default function AlertForm() {
 
 const styles = StyleSheet.create({
     container: {
-        //flex: 1,
         padding: 16,
         backgroundColor: '#fff',
-        color: '#25292e',
+        color: '#383E42',
     },
     label: {
         fontSize: 12,
@@ -177,8 +240,13 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     footerContainer: {
-        flex: 1 / 3,
         alignItems: 'center',
+        backgroundColor: '#383E42',
+        borderRadius: 8,
+        marginTop:4,
+        marginBottom:4,
+        marginLeft:24,
+        marginRight:24,
     },
     datePickerButton: {
         flexDirection: 'row',
@@ -187,6 +255,12 @@ const styles = StyleSheet.create({
         padding: 10,
         borderRadius: 5,
     },
- 
+    timePickerButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#f0f0f0',
+        padding: 10,
+        borderRadius: 5,
+    },
 });
 

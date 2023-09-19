@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './components/HomeScreen';
 import AlertForm from './components/AlertForm';
 
+
 const tab = createBottomTabNavigator();
 
 export default function App() {
@@ -36,7 +37,7 @@ export default function App() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#25292e',
+        backgroundColor: '#383E42',
     },
  
 });
