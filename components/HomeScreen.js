@@ -12,7 +12,7 @@ export default function HomeScreen() {
     return (
         <View style={styles.container}>
             <View style={styles.banner}>
-                <Text style={styles.bannerText}>Bienvenue à Simplonville</Text>
+                <Text style={styles.bannerText}>Bienvenue A Simplonville</Text>
                 <Text style={styles.title}>Alertez-nous !  La ville de Simplonville peut vous aider.</Text>
             </View>
         </View>
@@ -23,7 +23,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'center',
         backgroundColor: '#fff',
     },
     banner: {
