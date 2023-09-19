@@ -1,25 +1,35 @@
 import React from 'react';
-import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, Image } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-import AlertForm from './components/AlertForm';
-import Navigation from './components/Navigation';
 import HomeScreen from './components/HomeScreen';
+import AlertForm from './components/AlertForm';
 
-//const PlaceholderImage = require('./assets/images/background-image.png');
+const tab = createBottomTabNavigator();
 
 export default function App() {
     return (
-        <View style={styles.container}>
-            <Navigation />
-            <Text style={{ color: '#fff' }}>Alertez-nous ! La ville de Simplonville peut vous aider.</Text>
-            {/*<View style={styles.imageContainer}>*/}
-            {/*    <Image source={PlaceholderImage} style={styles.images} />*/}
-            {/*</View>*/}
-            <HomeScreen />
-            <AlertForm />
-            <StatusBar style="auto" />
-        </View>
+
+        <NavigationContainer>
+            <tab.Navigator
+                screenOptions={({ route }) => ({
+                    tabBarIcon: ({ focused, color, size }) => {
+                        let iconName;
+                        if (route.name == "Accueil") {
+                            iconName = "home"
+                        } else if (route.name == "Alertez-nous") {
+                            iconName = "alert-circle"
+                        }
+                        return <Ionicons name={iconName} size={24} color={'#25292e'} />
+                    }
+                })}>
+
+                <tab.Screen name="Accueil" component={HomeScreen} />
+                <tab.Screen name="Alertez-nous" component={AlertForm} />
+            </tab.Navigator>
+        </NavigationContainer>
     );
 }
 
@@ -28,14 +38,5 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#25292e',
     },
-    imageContainer: {
-        flex: 1,
-        paddingTop: 58,
-    },
-    image: {
-        width: 320,
-        height: 200,
-        borderRadius: 18,
-    },
-
+ 
 });

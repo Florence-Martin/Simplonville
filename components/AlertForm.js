@@ -107,7 +107,9 @@ export default function AlertForm() {
                     </View>
                 )}
 
-                <Button title="Soumettre" onPress={handleSubmit} />
+                <TouchableOpacity onPress={handleSubmit}>
+                    <Text>Envoyer l'alerte</Text>
+                </TouchableOpacity>
             </View>
         );
     };
@@ -118,6 +120,7 @@ const styles = StyleSheet.create({
         flex: 1,
         padding: 16,
         backgroundColor: '#fff',
+        color: '#25292e',
     },
     label: {
         fontSize: 16,
