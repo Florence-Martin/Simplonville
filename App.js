@@ -7,6 +7,12 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import HomeScreen from './components/HomeScreen';
 import AlertForm from './components/AlertForm';
 
+import emailjs from 'emailjs-com';
+
+const REACT_APP_SERVICE_ID = process.env.REACT_APP_SERVICE_ID;
+const REACT_APP_TEMPLATE_ID = process.env.REACT_APP_TEMPLATE_ID;
+
+emailjs.init(REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID);
 
 const tab = createBottomTabNavigator();
 

@@ -6,8 +6,9 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import ButtonImage from './ButtonImage';
 import MapViewer from './MapViewer';
 
+import { REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID } from '@env';
 export default function AlertForm() {
-   
+
     const [alertType, setAlertType] = useState('');
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
@@ -22,6 +23,7 @@ export default function AlertForm() {
     const [time, setTime] = useState(new Date());
     const [showTimePicker, setShowTimePicker] = useState(false);
     const [photo, setPhoto] = useState(null);
+
 
     const handleChoosePhoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -42,33 +44,38 @@ export default function AlertForm() {
         }
     };
 
-    const handleSubmit = () => {
-        const name = useState('').value;
-        const email = useState('').value;
-        const alertType = useState('').value;
-        if (!alert) {
-            return;
-        }
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        // Vérifiez que tous les champs obligatoires sont remplis
+        //if (!alertType || !name || !email || !phoneNumber || !description || !date) {
+        //    return;
+        //}
+
+        // Créez les données à envoyer à EmailJS
         const templateParams = {
-            name,
-            email,
             alertType,
+            name,
+            firstname,
+            description,
+            address,
+            postcode,
+            city,
+            email,
+            phoneNumber,
+            date,
+            time,
         };
 
+        // Envoyez l'e-mail
         emailjs
-            .send(
-                'EMAILJS_SERVICE_ID',
-                'EMAILJS_TEMPLATE_ID',
-                templateParams,
-                'YOUR_USER_ID'
-            )
+            .send(REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID, templateParams)
             .then((response) => {
                 console.log('E-mail envoyé avec succès', response);
             })
             .catch((error) => {
                 console.error('Erreur lors de l\'envoi de l\'e-mail', error);
             });
-
     };
 
     const onChangeDate = (event, selectedDate) => {
@@ -80,7 +87,6 @@ export default function AlertForm() {
     const onChangeTime = (event, selectedTime) => {
         setShowTimePicker(false);
         if (selectedTime !== undefined) {
-            setTime(selectedTime);
         }
     };
 
@@ -150,7 +156,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setCity(text)}
 
                 />
- 
+
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -236,6 +242,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginBottom: 16,
         paddingHorizontal: 8,
+        color: '#fff',
     },
     placeholder: {
         color: '#F5F5F5',
