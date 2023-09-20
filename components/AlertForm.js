@@ -4,11 +4,10 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import * as ImagePicker from 'expo-image-picker';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import ButtonImage from './ButtonImage';
-import emailjs from '@emailjs/browser';
 import MapViewer from './MapViewer';
 
 export default function AlertForm() {
-
+   
     const [alertType, setAlertType] = useState('');
     const [description, setDescription] = useState('');
     const [name, setName] = useState('');
@@ -90,8 +89,6 @@ export default function AlertForm() {
             <MapViewer />
 
             <View style={styles.container}>
-
-                {/*<Text style={styles.label}>Type d'alerte :</Text>*/}
                 <TextInput
                     style={styles.input}
                     placeholder="Entrez le type d'alerte"
@@ -100,7 +97,6 @@ export default function AlertForm() {
                     onChangeText={(text) => setAlertType(text)}
                 />
 
-                {/*<Text style={styles.label}>Description :</Text>*/}
                 <TextInput
                     style={[styles.input, styles.multilineInput]}
                     placeholder="Entrez la description"
@@ -110,7 +106,6 @@ export default function AlertForm() {
                     multiline
                 />
 
-                {/*<Text style={styles.label}>Nom :</Text>*/}
                 <TextInput
                     style={styles.input}
                     placeholder="Nom"
@@ -119,7 +114,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setName(text)}
 
                 />
-                {/*<Text style={styles.label}>Prenom :</Text>*/}
+
                 <TextInput
                     style={styles.input}
                     placeholder="Prenom"
@@ -128,7 +123,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setFirstname(text)}
 
                 />
-                {/*<Text style={styles.label}>Adresse :</Text>*/}
+
                 <TextInput
                     style={styles.input}
                     placeholder="Adresse"
@@ -137,7 +132,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setAddress(text)}
 
                 />
-                {/*<Text style={styles.label}>Code postal :</Text>*/}
+
                 <TextInput
                     style={styles.input}
                     placeholder="Code postal"
@@ -146,7 +141,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setPostcode(text)}
 
                 />
-                {/*<Text style={styles.label}>Ville :</Text>*/}
+
                 <TextInput
                     style={styles.input}
                     placeholder="Ville"
@@ -155,7 +150,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setCity(text)}
 
                 />
-                {/*<Text style={styles.label}>Email :</Text>*/}
+ 
                 <TextInput
                     style={styles.input}
                     placeholder="Email"
@@ -164,7 +159,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setEmail(text)}
 
                 />
-                {/*<Text style={styles.label}>T&eacute;l&eacute;phone :</Text>*/}
+
                 <TextInput
                     style={styles.input}
                     placeholder="T&eacute;l&eacute;phone"
@@ -208,7 +203,6 @@ export default function AlertForm() {
 
                 <Button title="Choisir une photo" onPress={handleChoosePhoto} />
 
-
                 {photo && (
                     <View>
                         <Text>Photo sélectionnée :</Text>
@@ -222,8 +216,6 @@ export default function AlertForm() {
             </View>
         </ScrollView>
     )
-
-
 }
 
 const styles = StyleSheet.create({
