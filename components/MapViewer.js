@@ -31,7 +31,7 @@ export default function MapViewer() {
 
             //Requête Axios pour obtenir les données
             try {
-                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=a0963b2cbb984a1797766a1229ebc5a5`);
+                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=${GEOAPIFY_API_KEY}`);
                 const formattedAddress = response.data.features[0]?.properties?.formatted;
                 setAddress(formattedAddress);
             } catch (error) {
