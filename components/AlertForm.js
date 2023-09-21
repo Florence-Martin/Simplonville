@@ -48,9 +48,9 @@ export default function AlertForm() {
         event.preventDefault();
 
         // Vérifiez que tous les champs obligatoires sont remplis
-        //if (!alertType || !name || !email || !phoneNumber || !description || !date) {
-        //    return;
-        //}
+        if (!alertType || !name || !email || !phoneNumber || !description || !date) {
+            return;
+        }
 
         // Créez les données à envoyer à EmailJS
         const templateParams = {

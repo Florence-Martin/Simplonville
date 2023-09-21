@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, Image } from 'react-native';
+import { StyleSheet, View, Text } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import ImageViewer from './ImageViewer';
 
@@ -7,13 +7,14 @@ import ImageViewer from './ImageViewer';
 const PlaceholderImage = require('../assets/images/accueil-image.jpeg');
 
 export default function HomeScreen() {
-  
+
     return (
         <View style={styles.container}>
             <View style={styles.banner}>
                 <Text style={styles.bannerText}>Bienvenue &agrave; Simplonville</Text>
-                <Text style={styles.title}>Alertez-nous ! Accident, travaux, probl&egrave;me de voirie (propret&eacute;, &eacute;clairage,...) !  </Text>
-                <Text style={styles.title}>Priorit&eacute; num&eacute;ro 1, la s&eacute;curit&eacute; de tous.  </Text>
+                <Text style={styles.title} >
+                    Alertez-nous !{"\n"} Accident, travaux, probl&egrave;me de voirie (propret&eacute;, &eacute;clairage,...) !
+                </Text>
             </View>
             <View >
                 <ImageViewer placeholderImageSource={PlaceholderImage} />
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     banner: {
         backgroundColor: '#383E42',
         width: '100%',
-        height: 80,
+        height: 120,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -45,9 +46,8 @@ const styles = StyleSheet.create({
     },
 
     title: {
-        color: '#fff',
+        color: 'white',
         width: '100%',
-        height: 50,
         textAlign: 'center',
     },
     image: {

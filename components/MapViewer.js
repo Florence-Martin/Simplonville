@@ -1,47 +1,95 @@
-import React from 'react';
-import { StyleSheet, View, Button, Text, PermissionsAndroid } from 'react-native';
-//import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import MapView, { Marker, Circle, Callout } from 'react-native-maps';
+import { StyleSheet, View, Text } from 'react-native';
+import * as Location from 'expo-location';
+//import axios from 'axios';
+//import { GEOAPIFY_API_KEY } from '@env';
 
 export default function MapViewer() {
+    const [pin, setPin] = useState({
+        latitude: 45.7751,
+        longitude: 4.8271,
+    })
+    //const [data, setData] = useState(null);
+    
 
-    const requestLocationPermission = async () => {
-        try {
-            const granted = await PermissionsAndroid.request(
-                PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
-                {
-                    title: 'Geolocation Permission',
-                    message: 'Can we access your location?',
-                    buttonNeutral: 'Ask Me Later',
-                    buttonNegative: 'Cancel',
-                    buttonPositive: 'OK',
-                },
-            );
-            console.log('granted', granted);
-            if (granted === 'granted') {
-                console.log('You can use Geolocation');
-                return true;
-            } else {
-                console.log('You cannot use Geolocation');
-                return false;
+    useEffect(() => {
+        (async () => {
+
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
+                setErrorMsg('Permission to access location was denied');
+                return;
             }
-        } catch (err) {
-            return false;
-        }
-    };
+
+            let location = await Location.getCurrentPositionAsync({});
+            setLocation(location);
+            setPin({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+            });
+
+            // Requête Axios pour obtenir les données
+            //try {
+            //    const response = await axios.get('', {
+            //        headers: {
+            //            'apikey': GEOAPIFY,
+            //        },
+            //    });
+            //    setData(response.data);
+            //} catch (error) {
+            //    console.error('Erreur lors de la requête Axios : ', error);
+            //}
+        })();
+    }, []);
 
     return (
-        <View style={styles.container, styles.map}>
-            <Text>Welcome!</Text>
-            <View
-                style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-                <Button title="Get Location" />
-            </View>
-            <Text>Latitude: </Text>
-            <Text>Longitude: </Text>
-            <View
-                style={{ marginTop: 10, padding: 10, borderRadius: 10, width: '40%' }}>
-                <Button title="Send Location" />
-            </View>
+        <View style={styles.container}>
+            <MapView
+                style={styles.map}
+                initialRegion={{
+                    latitude: 45.7751,
+                    longitude: 4.8271,
+                    latitudeDelta: 0.0922,
+                    longitudeDelta: 0.0421,
+                }}
+                showUserLocation={true}
+                onUserLocationChange={(e) => {
+                    //console.log("onUserLocationCHange", e.nativeEvent.coordinate);
+
+                    setPin({
+                        latitude: e.nativeEvent.coordinate.latitude,
+                        longitude: e.nativeEvent.coordinate.longitude,
+                    })
+                }}
+            >
+                <Marker
+                    coordinate={pin}
+                    title="Localisation"
+                    description="Description du lieu"
+                    pinColor="red"
+                    draggable={true}
+                    onDragStart={(e) => {
+                        //console.log("Drag start", e.nativeEvent.coordinate);
+                    }}
+                    onDragEnd={(e) => {
+                        // console.log("Drag end", e.nativeEvent.coordinate);
+
+                        setPin({
+                            latitude: e.nativeEvent.coordinate.latitude,
+                            longitude: e.nativeEvent.coordinate.longitude,
+                        })
+                    }}
+                >
+                    <Callout>
+                        <Text>Habitation</Text>
+                    </Callout>
+                </Marker>
+                <Circle
+                    center={pin}
+                    radius={100}
+                />
+            </MapView>
         </View>
     );
 }
@@ -52,8 +100,6 @@ const styles = StyleSheet.create({
     },
     map: {
         width: '100%',
-        height: 300,
-        justifyContent: 'center',
-        alignItems: 'center',
+        height: 250,
     },
 });
