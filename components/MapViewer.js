@@ -2,20 +2,21 @@ import React, { useState, useEffect } from 'react';
 import MapView, { Marker, Circle, Callout } from 'react-native-maps';
 import { StyleSheet, View, Text } from 'react-native';
 import * as Location from 'expo-location';
-//import axios from 'axios';
-//import { GEOAPIFY_API_KEY } from '@env';
+
+import axios from 'axios';
+import { GEOAPIFY_API_KEY } from '@env';
 
 export default function MapViewer() {
     const [pin, setPin] = useState({
         latitude: 45.7751,
         longitude: 4.8271,
     })
-    //const [data, setData] = useState(null);
-    
+    const [address, setAddress] = useState(null);
+
 
     useEffect(() => {
         (async () => {
-
+            //demande permission d'obtenir données GPS de l'appareil
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
@@ -23,23 +24,19 @@ export default function MapViewer() {
             }
 
             let location = await Location.getCurrentPositionAsync({});
-            setLocation(location);
             setPin({
                 latitude: location.coords.latitude,
                 longitude: location.coords.longitude,
             });
 
-            // Requête Axios pour obtenir les données
-            //try {
-            //    const response = await axios.get('', {
-            //        headers: {
-            //            'apikey': GEOAPIFY,
-            //        },
-            //    });
-            //    setData(response.data);
-            //} catch (error) {
-            //    console.error('Erreur lors de la requête Axios : ', error);
-            //}
+            //Requête Axios pour obtenir les données
+            try {
+                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=a0963b2cbb984a1797766a1229ebc5a5`);
+                const formattedAddress = response.data.features[0]?.properties?.formatted;
+                setAddress(formattedAddress);
+            } catch (error) {
+                console.error('Erreur lors de la requête Axios : ', error);
+            }
         })();
     }, []);
 
@@ -54,8 +51,9 @@ export default function MapViewer() {
                     longitudeDelta: 0.0421,
                 }}
                 showUserLocation={true}
+                //mise à jour du pin qd l'utilisateur bouge
                 onUserLocationChange={(e) => {
-                    //console.log("onUserLocationCHange", e.nativeEvent.coordinate);
+                    console.log("onUserLocationChange", e.nativeEvent.coordinate);
 
                     setPin({
                         latitude: e.nativeEvent.coordinate.latitude,
@@ -66,14 +64,15 @@ export default function MapViewer() {
                 <Marker
                     coordinate={pin}
                     title="Localisation"
-                    description="Description du lieu"
+                    description={address || "Chargement de l'adresse"}
                     pinColor="red"
                     draggable={true}
+                    //mise à jour du pin qd le marker bouge
                     onDragStart={(e) => {
-                        //console.log("Drag start", e.nativeEvent.coordinate);
+                        console.log("Drag start", e.nativeEvent.coordinate);
                     }}
                     onDragEnd={(e) => {
-                        // console.log("Drag end", e.nativeEvent.coordinate);
+                        console.log("Drag end", e.nativeEvent.coordinate);
 
                         setPin({
                             latitude: e.nativeEvent.coordinate.latitude,
@@ -81,8 +80,8 @@ export default function MapViewer() {
                         })
                     }}
                 >
-                    <Callout>
-                        <Text>Habitation</Text>
+                    <Callout style={styles.callout }>
+                        <Text>{address}</Text>
                     </Callout>
                 </Marker>
                 <Circle
@@ -102,4 +101,8 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 250,
     },
+    callout: {
+        width: 50,
+        height:50,
+    }
 });
