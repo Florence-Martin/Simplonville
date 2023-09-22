@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "Simplonville",
-    "slug": "Simplonville",
+    "slug": "simplon-brief",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,10 +21,22 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      },
+      }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3792c321-0a0f-40a1-bb14-efa980b3accc"
+      }
+    },
+    "owner": "flomart",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/3792c321-0a0f-40a1-bb14-efa980b3accc"
     }
   }
 }

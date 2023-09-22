@@ -48,7 +48,7 @@ export default function AlertForm() {
         event.preventDefault();
 
         // Vérifiez que tous les champs obligatoires sont remplis
-        if (!alertType || !name || !email || !phoneNumber || !description || !date) {
+        if (!alertType || !name || !email || !phoneNumber || !description || !address || !postcode || !city || !date) {
             return;
         }
 
@@ -111,7 +111,7 @@ export default function AlertForm() {
                     onChangeText={(text) => setDescription(text)}
                     multiline
                 />
-
+                <View style={styles.blockName }>
                 <TextInput
                     style={styles.input}
                     placeholder="Nom"
@@ -128,7 +128,8 @@ export default function AlertForm() {
                     value={firstname}
                     onChangeText={(text) => setFirstname(text)}
 
-                />
+                    />
+                </View>
 
                 <TextInput
                     style={styles.input}
@@ -139,6 +140,7 @@ export default function AlertForm() {
 
                 />
 
+                <View style={styles.blockName}>
                 <TextInput
                     style={styles.input}
                     placeholder="Code postal"
@@ -155,7 +157,8 @@ export default function AlertForm() {
                     value={city}
                     onChangeText={(text) => setCity(text)}
 
-                />
+                    />
+                </View>
 
                 <TextInput
                     style={styles.input}
@@ -174,8 +177,9 @@ export default function AlertForm() {
                     onChangeText={(text) => setPhoneNumber(text)}
 
                 />
-                <View>
-                    <Text style={styles.label}>Date :</Text>
+                
+                    <View style={styles.blockDateTime}>
+                  
                     <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
                         <Ionicons name="calendar" size={24} color='#25292e' />
                     </Pressable>
@@ -189,10 +193,7 @@ export default function AlertForm() {
                             onChange={onChangeDate}
                         />
                     )}
-                </View>
-
-
-                <Text style={styles.label}>Heure :</Text>
+               
                 <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
                     <Ionicons name="time" size={24} color="black" />
                 </Pressable>
@@ -206,6 +207,7 @@ export default function AlertForm() {
                         onChange={onChangeTime}
                     />
                 )}
+                </View>
 
                 <Button title="Choisir une photo" onPress={handleChoosePhoto} />
 
@@ -235,7 +237,13 @@ const styles = StyleSheet.create({
         color: '#fff',
         paddingBottom: 2,
     },
+    blockName: {
+        flexDirection: "row",
+        justifyContent:"space-between",
+    },
     input: {
+        flexGrow: 1,
+        flexBasis:'50%',
         height: 40,
         borderColor: 'gray',
         borderWidth: 2,
@@ -268,6 +276,10 @@ const styles = StyleSheet.create({
         marginBottom: 4,
         marginLeft: 24,
         marginRight: 24,
+    },
+    blockDateTime: {
+        flexDirection: "row",
+        justifyContent: "space-around",
     },
     datePickerButton: {
         flexDirection: 'row',

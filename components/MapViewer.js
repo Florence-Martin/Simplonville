@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import * as Location from 'expo-location';
 
 import axios from 'axios';
-import { GEOAPIFY_API_KEY } from '@env';
+import { YOUR_API_KEY } from '@env';
 
 export default function MapViewer() {
     const [pin, setPin] = useState({
@@ -12,10 +12,11 @@ export default function MapViewer() {
         longitude: 4.8271,
     })
     const [address, setAddress] = useState(null);
-
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
         (async () => {
+            setIsLoading(true);
             //demande permission d'obtenir données GPS de l'appareil
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
@@ -31,12 +32,13 @@ export default function MapViewer() {
 
             //Requête Axios pour obtenir les données
             try {
-                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=${GEOAPIFY_API_KEY}`);
+                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=${location.coords.longitude}&apiKey=${YOUR_API_KEY}`);
                 const formattedAddress = response.data.features[0]?.properties?.formatted;
                 setAddress(formattedAddress);
             } catch (error) {
                 console.error('Erreur lors de la requête Axios : ', error);
             }
+            setIsLoading(false);
         })();
     }, []);
 
