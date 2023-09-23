@@ -7,6 +7,7 @@ import ButtonImage from './ButtonImage';
 import MapViewer from './MapViewer';
 
 import { REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID } from '@env';
+
 export default function AlertForm() {
 
     const [alertType, setAlertType] = useState('');
@@ -111,22 +112,22 @@ export default function AlertForm() {
                     onChangeText={(text) => setDescription(text)}
                     multiline
                 />
-                <View style={styles.blockName }>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Nom"
-                    placeholderTextColor={styles.placeholder.color}
-                    value={name}
-                    onChangeText={(text) => setName(text)}
+                <View style={styles.blockName}>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Nom"
+                        placeholderTextColor={styles.placeholder.color}
+                        value={name}
+                        onChangeText={(text) => setName(text)}
 
-                />
+                    />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Prenom"
-                    placeholderTextColor={styles.placeholder.color}
-                    value={firstname}
-                    onChangeText={(text) => setFirstname(text)}
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Prenom"
+                        placeholderTextColor={styles.placeholder.color}
+                        value={firstname}
+                        onChangeText={(text) => setFirstname(text)}
 
                     />
                 </View>
@@ -141,21 +142,21 @@ export default function AlertForm() {
                 />
 
                 <View style={styles.blockName}>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Code postal"
-                    placeholderTextColor={styles.placeholder.color}
-                    value={postcode}
-                    onChangeText={(text) => setPostcode(text)}
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Code postal"
+                        placeholderTextColor={styles.placeholder.color}
+                        value={postcode}
+                        onChangeText={(text) => setPostcode(text)}
 
-                />
+                    />
 
-                <TextInput
-                    style={styles.input}
-                    placeholder="Ville"
-                    placeholderTextColor={styles.placeholder.color}
-                    value={city}
-                    onChangeText={(text) => setCity(text)}
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Ville"
+                        placeholderTextColor={styles.placeholder.color}
+                        value={city}
+                        onChangeText={(text) => setCity(text)}
 
                     />
                 </View>
@@ -177,9 +178,9 @@ export default function AlertForm() {
                     onChangeText={(text) => setPhoneNumber(text)}
 
                 />
-                
-                    <View style={styles.blockDateTime}>
-                  
+
+                <View style={styles.blockDateTime}>
+
                     <Pressable onPress={() => setShowDatePicker(true)} style={styles.datePickerButton}>
                         <Ionicons name="calendar" size={24} color='#25292e' />
                     </Pressable>
@@ -193,20 +194,20 @@ export default function AlertForm() {
                             onChange={onChangeDate}
                         />
                     )}
-               
-                <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
-                    <Ionicons name="time" size={24} color="black" />
-                </Pressable>
-                {showTimePicker && (
-                    <DateTimePicker
-                        testID="timePicker"
-                        value={time}
-                        mode="time"
-                        is24Hour={true}
-                        display="default"
-                        onChange={onChangeTime}
-                    />
-                )}
+
+                    <Pressable onPress={() => setShowTimePicker(true)} style={styles.timePickerButton}>
+                        <Ionicons name="time" size={24} color="black" />
+                    </Pressable>
+                    {showTimePicker && (
+                        <DateTimePicker
+                            testID="timePicker"
+                            value={time}
+                            mode="time"
+                            is24Hour={true}
+                            display="default"
+                            onChange={onChangeTime}
+                        />
+                    )}
                 </View>
 
                 <Button title="Choisir une photo" onPress={handleChoosePhoto} />
@@ -222,7 +223,8 @@ export default function AlertForm() {
                     <ButtonImage label="Envoyer l'alerte" />
                 </Pressable>
             </View>
-        </ScrollView>
+
+        </ScrollView >
     )
 }
 
@@ -239,11 +241,11 @@ const styles = StyleSheet.create({
     },
     blockName: {
         flexDirection: "row",
-        justifyContent:"space-between",
+        justifyContent: "space-between",
     },
     input: {
         flexGrow: 1,
-        flexBasis:'50%',
+        flexBasis: '50%',
         height: 40,
         borderColor: 'gray',
         borderWidth: 2,

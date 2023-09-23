@@ -11,8 +11,17 @@ export default function MapViewer() {
         latitude: 45.7751,
         longitude: 4.8271,
     })
+
     const [address, setAddress] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
+
+    // Définir une fonction pour mettre à jour le pin
+    const updatePin = (newPin) => {
+        setPin(newPin);
+    };
+
+    // Définir une variable d'état pour l'erreur
+    const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         (async () => {
@@ -56,11 +65,7 @@ export default function MapViewer() {
                 //mise à jour du pin qd l'utilisateur bouge
                 onUserLocationChange={(e) => {
                     console.log("onUserLocationChange", e.nativeEvent.coordinate);
-
-                    setPin({
-                        latitude: e.nativeEvent.coordinate.latitude,
-                        longitude: e.nativeEvent.coordinate.longitude,
-                    })
+                    updatePin(e.nativeEvent.coordinate);
                 }}
             >
                 <Marker
@@ -72,14 +77,11 @@ export default function MapViewer() {
                     //mise à jour du pin qd le marker bouge
                     onDragStart={(e) => {
                         console.log("Drag start", e.nativeEvent.coordinate);
+                        updatePin(e.nativeEvent.coordinate);
                     }}
                     onDragEnd={(e) => {
                         console.log("Drag end", e.nativeEvent.coordinate);
-
-                        setPin({
-                            latitude: e.nativeEvent.coordinate.latitude,
-                            longitude: e.nativeEvent.coordinate.longitude,
-                        })
+                        updatePin(e.nativeEvent.coordinate);
                     }}
                 >
                     <Callout style={styles.callout }>
