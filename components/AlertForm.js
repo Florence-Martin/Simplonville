@@ -29,7 +29,7 @@ export default function AlertForm() {
     const handleChoosePhoto = async () => {
         const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
-            console.log('Permission non accordée pour accéder à la bibliothèque de médias.');
+            console.log('Permission non accordï¿½e pour accï¿½der ï¿½ la bibliothï¿½que de mï¿½dias.');
             return;
         }
 
@@ -48,12 +48,12 @@ export default function AlertForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
-        // Vérifiez que tous les champs obligatoires sont remplis
+        // Vï¿½rifiez que tous les champs obligatoires sont remplis
         if (!alertType || !name || !email || !phoneNumber || !description || !address || !postcode || !city || !date) {
             return;
         }
 
-        // Créez les données à envoyer à EmailJS
+        // Crï¿½ez les donnï¿½es ï¿½ envoyer ï¿½ EmailJS
         const templateParams = {
             alertType,
             name,
@@ -72,7 +72,7 @@ export default function AlertForm() {
         emailjs
             .send(REACT_APP_SERVICE_ID, REACT_APP_TEMPLATE_ID, templateParams)
             .then((response) => {
-                console.log('E-mail envoyé avec succès', response);
+                console.log('E-mail envoyï¿½ avec succï¿½s', response);
             })
             .catch((error) => {
                 console.error('Erreur lors de l\'envoi de l\'e-mail', error);
@@ -214,7 +214,7 @@ export default function AlertForm() {
 
                 {photo && (
                     <View>
-                        <Text>Photo sélectionnée :</Text>
+                        <Text>Photo sï¿½lectionnï¿½e :</Text>
                         <Image source={{ uri: photo.uri }} style={{ width: 200, height: 200 }} />
                     </View>
                 )}

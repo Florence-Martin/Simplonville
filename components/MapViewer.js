@@ -4,7 +4,7 @@ import { StyleSheet, View, Text } from 'react-native';
 import * as Location from 'expo-location';
 
 import axios from 'axios';
-import { YOUR_API_KEY } from '@env';
+import { REACT_APP_API_KEY } from '@env';
 
 export default function MapViewer() {
     const [pin, setPin] = useState({
@@ -15,18 +15,18 @@ export default function MapViewer() {
     const [address, setAddress] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
 
-    // Définir une fonction pour mettre à jour le pin
+    // Dï¿½finir une fonction pour mettre ï¿½ jour le pin
     const updatePin = (newPin) => {
         setPin(newPin);
     };
 
-    // Définir une variable d'état pour l'erreur
+    // Dï¿½finir une variable d'ï¿½tat pour l'erreur
     const [errorMsg, setErrorMsg] = useState(null);
 
     useEffect(() => {
         (async () => {
             setIsLoading(true);
-            //demande permission d'obtenir données GPS de l'appareil
+            //demande permission d'obtenir donnï¿½es GPS de l'appareil
             let { status } = await Location.requestForegroundPermissionsAsync();
             if (status !== 'granted') {
                 setErrorMsg('Permission to access location was denied');
@@ -39,13 +39,13 @@ export default function MapViewer() {
                 longitude: location.coords.longitude,
             });
 
-            //Requête Axios pour obtenir les données
+            //Requï¿½te Axios pour obtenir les donnï¿½es
             try {
-                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=${location.coords.longitude}&apiKey=${YOUR_API_KEY}`);
+                const response = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${location.coords.latitude}&lon=${location.coords.longitude}&apiKey=${REACT_APP_API_KEY}`);
                 const formattedAddress = response.data.features[0]?.properties?.formatted;
                 setAddress(formattedAddress);
             } catch (error) {
-                console.error('Erreur lors de la requête Axios : ', error);
+                console.error('Erreur lors de la requï¿½te Axios : ', error);
             }
             setIsLoading(false);
         })();
@@ -62,7 +62,7 @@ export default function MapViewer() {
                     longitudeDelta: 0.0421,
                 }}
                 showUserLocation={true}
-                //mise à jour du pin qd l'utilisateur bouge
+                //mise ï¿½ jour du pin qd l'utilisateur bouge
                 onUserLocationChange={(e) => {
                     console.log("onUserLocationChange", e.nativeEvent.coordinate);
                     updatePin(e.nativeEvent.coordinate);
@@ -74,7 +74,7 @@ export default function MapViewer() {
                     description={address || "Chargement de l'adresse"}
                     pinColor="red"
                     draggable={true}
-                    //mise à jour du pin qd le marker bouge
+                    //mise ï¿½ jour du pin qd le marker bouge
                     onDragStart={(e) => {
                         console.log("Drag start", e.nativeEvent.coordinate);
                         updatePin(e.nativeEvent.coordinate);

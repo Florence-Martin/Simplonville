@@ -1,12 +1,8 @@
 {
   "ExpandedNodes": [
     "",
-    "\\%ProgramData%\\Microsoft",
-    "\\%ProgramData%\\Microsoft\\Windows",
-    "\\%ProgramData%\\Microsoft\\Windows\\UUS",
-    "\\%ProgramData%\\Microsoft\\Windows\\UUS\\State",
     "\\components"
   ],
-  "SelectedNode": "\\package.json",
+  "SelectedNode": "\\babel.config.js",
   "PreviewInSolutionExplorer": false
 }
